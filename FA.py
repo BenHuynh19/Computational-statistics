@@ -105,29 +105,10 @@ def plot_fi(fi):
     plt.show()
 
 
-def get_sample(df,n):
-    """ Gets a random sample of n rows from df, without replacement.
-    """
-    idxs = sorted(np.random.permutation(len(df))[:n])
-    return df.iloc[idxs].copy()
-
-
 def rf_feat_importance(m, df):
     return pd.DataFrame({'cols':df.columns, 'imp':m.feature_importances_}
                        ).sort_values('imp', ascending=False)
 
-def set_rf_samples(n):
-    """ Changes Scikit learn's random forests to give each tree a random sample of
-    n random rows.
-    """
-    forest._generate_sample_indices = (lambda rs, n_samples:
-        forest.check_random_state(rs).randint(0, n_samples, n))
-
-def reset_rf_samples():
-    """ Undoes the changes produced by set_rf_samples.
-    """
-    forest._generate_sample_indices = (lambda rs, n_samples:
-        forest.check_random_state(rs).randint(0, n_samples, n_samples))
 
 
 
